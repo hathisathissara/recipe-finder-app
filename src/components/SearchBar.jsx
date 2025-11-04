@@ -1,27 +1,34 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { useSearch } from '../context/SearchContext'; // Import useSearch
 
 const SearchBar = ({ onSearch }) => {
+    // Get the globally stored ingredients to use as the initial state
+    const { ingredients: globalIngredients } = useSearch();
 
-    const [inputValue, setInputValue] = useState('')
-    const [ingredients, setIngredients] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    // The local state for pills now starts with the last-searched ingredients
+    const [ingredients, setIngredients] = useState(globalIngredients);
 
     const handleAddIngredient = (e) => {
-        if (e.key == 'Enter' && inputValue.trim() !== '') {
+        if (e.key === 'Enter' && inputValue.trim() !== '') {
             e.preventDefault();
-            setIngredients([...ingredients, inputValue.trim()]);
+            // Avoid adding duplicate ingredients
+            if (!ingredients.includes(inputValue.trim())) {
+                setIngredients([...ingredients, inputValue.trim()]);
+            }
             setInputValue('');
         }
-    }
+    };
 
     const removeIngredient = (indexToRemove) => {
         setIngredients(ingredients.filter((_, index) => index !== indexToRemove));
-    }
+    };
+
     const handleSearchClick = () => {
         if (ingredients.length > 0) {
             onSearch(ingredients);
         }
-    }
-
+    };
 
     return (
         <div className="search-container">
@@ -34,8 +41,10 @@ const SearchBar = ({ onSearch }) => {
                     </span>
                 ))}
             </div>
-            <input type="text"
-                value={inputValue} onChange={(e) => setInputValue(e.target.value)}
+            <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleAddIngredient}
                 placeholder="Add ingredients and press Enter..."
             />
@@ -43,7 +52,7 @@ const SearchBar = ({ onSearch }) => {
                 Find Recipes
             </button>
         </div>
-    )
-}
+    );
+};
 
 export default SearchBar;

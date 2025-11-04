@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'; // Create a simple Navbar component
 import './App.css'
 import Footer from './components/Footer';
 
+
 function App() {
   return (
     <Router>

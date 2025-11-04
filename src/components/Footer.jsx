@@ -11,7 +11,7 @@ const Footer = () => {
                     &copy; {currentYear} RecipeFinder App. All Rights Reserved.
                 </p>
                 <p className="footer-attribution">
-                    Powered by the <a href="https://spoonacular.com/food-api" target="_blank" rel="noopener noreferrer">Spoonacular API</a>.
+                    Develop by the <a href="https://hathisathissara.unaux.com" target="_blank" rel="noopener noreferrer">Hathisa Thissara</a>.
                 </p>
             </div>
         </footer>
