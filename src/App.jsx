@@ -1,11 +1,12 @@
-// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import RecipeDetail from './pages/RecipeDetail'; // Import the new page
 import Navbar from './components/Navbar'; // Create a simple Navbar component
-import './App.css'
 import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 
 function App() {

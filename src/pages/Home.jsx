@@ -8,20 +8,43 @@ const Home = () => {
     const { recipes, isLoading, error, handleSearch } = useSearch();
 
     return (
-        <div>
-            {/* Pass the global search handler to the search bar */}
-            <SearchBar onSearch={handleSearch} />
+        <div className="container my-5">
+            {/* Search section */}
+            <div className="text-center mb-4">
+                <h1 className="mb-3 fw-bold text-primary">Find Your Perfect Recipe 🍲</h1>
+                <p className="text-muted">Enter ingredients to discover amazing dishes!</p>
+                <SearchBar onSearch={handleSearch} />
+            </div>
 
-            {isLoading && <p>Loading recipes...</p>}
+            {/* Loading message */}
+            {isLoading && (
+                <div className="text-center mt-4">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <p className="mt-3 text-secondary">Loading recipes...</p>
+                </div>
+            )}
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {/* Error message */}
+            {error && (
+                <div className="alert alert-danger text-center mt-3" role="alert">
+                    {error}
+                </div>
+            )}
 
-            {/* Display the recipe list using the global recipes state */}
-            {!isLoading && !error && recipes.length > 0 && <RecipeList recipes={recipes} />}
+            {/* Recipe list */}
+            {!isLoading && !error && recipes.length > 0 && (
+                <div className="mt-4">
+                    <RecipeList recipes={recipes} />
+                </div>
+            )}
 
-            {/* Initial message when no search has been performed */}
+            {/* Initial message */}
             {!isLoading && !error && recipes.length === 0 && (
-                <p>Enter some ingredients and find your next meal!</p>
+                <div className="text-center mt-5 text-muted">
+                    <p>Enter some ingredients and find your next meal!</p>
+                </div>
             )}
         </div>
     );

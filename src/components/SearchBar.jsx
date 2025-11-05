@@ -1,18 +1,15 @@
 import { useState } from 'react';
-import { useSearch } from '../context/SearchContext'; // Import useSearch
+import { useSearch } from '../context/SearchContext';
 
 const SearchBar = ({ onSearch }) => {
-    // Get the globally stored ingredients to use as the initial state
     const { ingredients: globalIngredients } = useSearch();
 
     const [inputValue, setInputValue] = useState('');
-    // The local state for pills now starts with the last-searched ingredients
     const [ingredients, setIngredients] = useState(globalIngredients);
 
     const handleAddIngredient = (e) => {
         if (e.key === 'Enter' && inputValue.trim() !== '') {
             e.preventDefault();
-            // Avoid adding duplicate ingredients
             if (!ingredients.includes(inputValue.trim())) {
                 setIngredients([...ingredients, inputValue.trim()]);
             }
@@ -31,26 +28,45 @@ const SearchBar = ({ onSearch }) => {
     };
 
     return (
-        <div className="search-container">
-            <h3>What's in your fridge</h3>
-            <div className="ingredient-pills">
+        <div className="card shadow-sm border-0 p-4 mb-4">
+            <h4 className="text-center mb-3 text-success fw-bold">What's in your fridge?</h4>
+
+            {/* Ingredient pills */}
+            <div className="d-flex flex-wrap justify-content-center gap-2 mb-3">
                 {ingredients.map((ingredient, index) => (
-                    <span key={index} className="pill">
+                    <span
+                        key={index}
+                        className="badge bg-success d-flex align-items-center px-3 py-2"
+                    >
                         {ingredient}
-                        <button onClick={() => removeIngredient(index)}>x</button>
+                        <button
+                            onClick={() => removeIngredient(index)}
+                            className="btn btn-sm btn-light ms-2 py-0 px-2"
+                            style={{ lineHeight: '1' }}
+                        >
+                            ×
+                        </button>
                     </span>
                 ))}
             </div>
-            <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleAddIngredient}
-                placeholder="Add ingredients and press Enter..."
-            />
-            <button onClick={handleSearchClick} className="search-button">
-                Find Recipes
-            </button>
+
+            {/* Input + Button */}
+            <div className="d-flex justify-content-center">
+                <input
+                    type="text"
+                    className="form-control w-50 me-2"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleAddIngredient}
+                    placeholder="Add ingredients and press Enter..."
+                />
+                <button
+                    onClick={handleSearchClick}
+                    className="btn btn-warning fw-semibold"
+                >
+                    Find Recipes
+                </button>
+            </div>
         </div>
     );
 };
